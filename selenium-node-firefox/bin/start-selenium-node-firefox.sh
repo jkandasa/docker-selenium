@@ -46,7 +46,7 @@ FIREFOX_BROWSER_CAPS="${FIREFOX_BROWSER_CAPS},version=${FIREFOX_VERSION}"
 java \
   -Dwebdriver.firefox.logfile="${LOGS_DIR}/firefox_driver.log" \
   ${JAVA_OPTS} \
-  -jar ${SELENIUM_JAR_PATH} \
+  -cp .:${SELENIUM_JAR_PATH}:${SIKULI_NODE_JAR_PATH} org.openqa.grid.selenium.GridLauncherV3 \
   -port ${SELENIUM_NODE_FF_PORT} \
   -host ${SELENIUM_NODE_HOST} \
   -role node \

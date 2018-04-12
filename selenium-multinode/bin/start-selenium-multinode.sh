@@ -51,7 +51,7 @@ java \
   -Dwebdriver.chrome.verboseLogging="${CHROME_VERBOSELOGGING}" \
   -Dwebdriver.firefox.logfile="${LOGS_DIR}/firefox_driver.log" \
   ${JAVA_OPTS} \
-  -jar ${SELENIUM_JAR_PATH} \
+  -cp .:${SELENIUM_JAR_PATH}:${SIKULI_NODE_JAR_PATH} org.openqa.grid.selenium.GridLauncherV3 \
   -port ${SELENIUM_MULTINODE_PORT} \
   -host ${SELENIUM_NODE_HOST} \
   -role node \
