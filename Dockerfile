@@ -4,13 +4,16 @@
 #
 # To overwrite the build args use:
 #  docker build ... --build-arg UBUNTU_DATE=20171006
-ARG UBUNTU_FLAVOR=xenial
-ARG UBUNTU_DATE=20180228
+#ARG UBUNTU_FLAVOR=xenial
+#ARG UBUNTU_DATE=20180228
 
 #== Ubuntu xenial is 16.04, i.e. FROM ubuntu:16.04
 # Find latest images at https://hub.docker.com/r/library/ubuntu/
 # Layer size: ~122 MB
-FROM ubuntu:${UBUNTU_FLAVOR}-${UBUNTU_DATE}
+FROM ubuntu:xenial-20180228
+
+ARG UBUNTU_FLAVOR=xenial
+ARG UBUNTU_DATE=20180228
 
 #== An ARG declared before a FROM is outside of a build stage,
 # so it can’t be used in any instruction after a FROM. To use
@@ -278,6 +281,21 @@ RUN  export SELBASE="https://selenium-release.storage.googleapis.com" \
            "selenium-server-standalone-3.jar"
 
 LABEL selenium_version "${SEL_VER}"
+
+#===============================
+# Sikuli grid & node extensions
+#===============================
+# Layer size: medium -- MB
+ARG SIKULI_VER="1.0.0-SNAPSHOT"
+
+RUN echo $SIKULI_VER
+RUN  export SIKULI_BASE="https://github.com/jkandasa/selenium-sikuli/releases/download/${SIKULI_VER}" \
+  && wget -nv ${SIKULI_BASE}/selenium-sikuli-grid-${SIKULI_VER}.jar \
+  && wget -nv ${SIKULI_BASE}/selenium-sikuli-node-${SIKULI_VER}.jar \
+  && ln -s "selenium-sikuli-grid-${SIKULI_VER}.jar" "selenium-sikuli-grid-1.jar" \
+  && ln -s "selenium-sikuli-node-${SIKULI_VER}.jar" "selenium-sikuli-node-1.jar"
+
+LABEL sikuli_extension_version "${SIKULI_VER}"
 
 #=============================
 # sudo by default from now on
@@ -561,6 +579,18 @@ RUN apt -qqy update \
 RUN apt -qqy update \
   && apt -qqy --no-install-recommends install \
     `apt-cache depends firefox | awk '/Depends:/{print$2}'` \
+  && rm -rf /var/lib/apt/lists/* \
+  && apt -qyy clean
+
+#==============
+# sikuli
+#==============
+# Layer size: medium: -- MB (with --no-install-recommends)
+# Layer size: medium: -- MB
+# sikuli-ide for sikuli OpenCV lib installation
+RUN apt -qqy update \
+  && apt -qqy --no-install-recommends install \
+    sikuli-ide \
   && rm -rf /var/lib/apt/lists/* \
   && apt -qyy clean
 
@@ -879,8 +909,9 @@ ENV FIREFOX_VERSION="${FF_VER}" \
   SELENIUM_NODE_CH_PORT="${DEFAULT_SELENIUM_NODE_CH_PORT}" \
   SELENIUM_NODE_FF_PORT="${DEFAULT_SELENIUM_NODE_FF_PORT}" \
   SELENIUM_MULTINODE_PORT="${DEFAULT_SELENIUM_MULTINODE_PORT}" \
-  SELENIUM_HUB_PARAMS="" \
-  SELENIUM_NODE_PARAMS="" \
+  SELENIUM_HUB_PARAMS="-servlet com.redhat.qe.sikuli.grid.SikuliGridServlet" \
+  SELENIUM_HUB_PARAMS="${SELENIUM_HUB_PARAMS} -capabilityMatcher com.redhat.qe.sikuli.grid.SikuliCapabilityMatcher" \
+  SELENIUM_NODE_PARAMS="-servlet com.redhat.qe.sikuli.node.SikuliNodeServlet" \
   SELENIUM_NODE_PROXY_PARAMS="" \
   CHROME_ARGS="--no-sandbox --disable-setuid-sandbox --disable-gpu --disable-infobars" \
   CHROME_ADDITIONAL_ARGS="" \

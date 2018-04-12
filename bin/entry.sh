@@ -108,12 +108,16 @@ fi
 # Fix/extend ENV vars
 #---------------------
 export SELENIUM_JAR_PATH="/home/seluser/selenium-server-standalone-3.jar"
+export SIKULI_GRID_JAR_PATH="/home/seluser/selenium-sikuli-grid-1.jar"
+export SIKULI_NODE_JAR_PATH="/home/seluser/selenium-sikuli-node-1.jar"
 export FIREFOX_DEST_BIN="/usr/bin/firefox"
 export DOSEL_VERSION=$(cat VERSION)
 export FIREFOX_VERSION=$(firefox_version)
 # CHROME_FLAVOR would allow to have separate installations for stable, beta, unstable
 export CHROME_PATH="/usr/bin/google-chrome-${CHROME_FLAVOR}"
 export CHROME_VERSION=$(chrome_${CHROME_FLAVOR}_version)
+
+export CLASSPATH=.:${SIKULI_GRID_JAR_PATH}:${SIKULI_NODE_JAR_PATH}
 
 echo "-- INFO: Docker Img. Version: ${DOSEL_VERSION}"
 echo "-- INFO: Chrome..... Version: ${CHROME_VERSION}"
@@ -181,6 +185,7 @@ export COMMON_CAPS="${COMMON_CAPS},resolution=${SCREEN_WIDTH}x${SCREEN_HEIGHT}"
 # https://testingbot.com/support/other/test-options#screenresolution
 export COMMON_CAPS="${COMMON_CAPS},screen-resolution=${SCREEN_WIDTH}x${SCREEN_HEIGHT}"
 export COMMON_CAPS="${COMMON_CAPS},tz=${TZ}"
+export COMMON_CAPS="${COMMON_CAPS},sikuliEnabled=true"
 
 # Video
 export FFMPEG_FRAME_SIZE="${SCREEN_WIDTH}x${SCREEN_HEIGHT}"
