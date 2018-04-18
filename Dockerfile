@@ -5,15 +5,15 @@
 # To overwrite the build args use:
 #  docker build ... --build-arg UBUNTU_DATE=20171006
 #ARG UBUNTU_FLAVOR=xenial
-#ARG UBUNTU_DATE=20180228
+#ARG UBUNTU_DATE=20180412
 
 #== Ubuntu xenial is 16.04, i.e. FROM ubuntu:16.04
 # Find latest images at https://hub.docker.com/r/library/ubuntu/
 # Layer size: ~122 MB
-FROM ubuntu:xenial-20180228
+FROM ubuntu:xenial-20180412
 
 ARG UBUNTU_FLAVOR=xenial
-ARG UBUNTU_DATE=20180228
+ARG UBUNTU_DATE=20180412
 
 #== An ARG declared before a FROM is outside of a build stage,
 # so it can’t be used in any instruction after a FROM. To use
