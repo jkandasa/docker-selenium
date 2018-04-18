@@ -108,8 +108,8 @@ fi
 # Fix/extend ENV vars
 #---------------------
 export SELENIUM_JAR_PATH="/home/seluser/selenium-server-standalone-3.jar"
-export SIKULI_GRID_JAR_PATH="/home/seluser/selenium-sikuli-grid-1.jar"
-export SIKULI_NODE_JAR_PATH="/home/seluser/selenium-sikuli-node-1.jar"
+export SIKULI_GRID_JAR_PATH="/home/seluser/sekuli-grid-1.jar"
+export SIKULI_NODE_JAR_PATH="/home/seluser/sekuli-node-1.jar"
 export FIREFOX_DEST_BIN="/usr/bin/firefox"
 export DOSEL_VERSION=$(cat VERSION)
 export FIREFOX_VERSION=$(firefox_version)

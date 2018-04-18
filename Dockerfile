@@ -289,11 +289,11 @@ LABEL selenium_version "${SEL_VER}"
 ARG SIKULI_VER="1.0.0-SNAPSHOT"
 
 RUN echo $SIKULI_VER
-RUN  export SIKULI_BASE="https://github.com/jkandasa/selenium-sikuli/releases/download/${SIKULI_VER}" \
-  && wget -nv ${SIKULI_BASE}/selenium-sikuli-grid-${SIKULI_VER}.jar \
-  && wget -nv ${SIKULI_BASE}/selenium-sikuli-node-${SIKULI_VER}.jar \
-  && ln -s "selenium-sikuli-grid-${SIKULI_VER}.jar" "selenium-sikuli-grid-1.jar" \
-  && ln -s "selenium-sikuli-node-${SIKULI_VER}.jar" "selenium-sikuli-node-1.jar"
+RUN  export SIKULI_BASE="https://github.com/jkandasa/sekuli/releases/download/${SIKULI_VER}" \
+  && wget -nv ${SIKULI_BASE}/sekuli-grid-${SIKULI_VER}.jar \
+  && wget -nv ${SIKULI_BASE}/sekuli-node-${SIKULI_VER}.jar \
+  && ln -s "sekuli-grid-${SIKULI_VER}.jar" "sekuli-grid-1.jar" \
+  && ln -s "sekuli-node-${SIKULI_VER}.jar" "sekuli-node-1.jar"
 
 LABEL sikuli_extension_version "${SIKULI_VER}"
 
@@ -909,8 +909,8 @@ ENV FIREFOX_VERSION="${FF_VER}" \
   SELENIUM_NODE_CH_PORT="${DEFAULT_SELENIUM_NODE_CH_PORT}" \
   SELENIUM_NODE_FF_PORT="${DEFAULT_SELENIUM_NODE_FF_PORT}" \
   SELENIUM_MULTINODE_PORT="${DEFAULT_SELENIUM_MULTINODE_PORT}" \
-  SELENIUM_HUB_PARAMS="-servlet com.redhat.qe.sikuli.grid.SikuliGridServlet -capabilityMatcher com.redhat.qe.sikuli.grid.SikuliCapabilityMatcher" \
-  SELENIUM_NODE_PARAMS="-servlet com.redhat.qe.sikuli.node.SikuliNodeServlet" \
+  SELENIUM_HUB_PARAMS="-servlet com.redhat.qe.sekuli.grid.SekuliGridServlet -capabilityMatcher com.redhat.qe.sekuli.grid.SekuliCapabilityMatcher" \
+  SELENIUM_NODE_PARAMS="-servlet com.redhat.qe.sekuli.node.SekuliNodeServlet" \
   SELENIUM_NODE_PROXY_PARAMS="" \
   CHROME_ARGS="--no-sandbox --disable-setuid-sandbox --disable-gpu --disable-infobars" \
   CHROME_ADDITIONAL_ARGS="" \
